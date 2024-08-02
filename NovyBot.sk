@@ -1,0 +1,15 @@
+function tmessage(m: string) :: telegram message:
+ set {_t} to a new telegram message with text "%{_m}%"
+ set {_button} to a new inline button with text "code | feel free to edit" with url "https://t.me/DereWah"
+ return {_t}
+load:
+ telegram login to bot "NovyBot" with token "7483071275:AAHhidqSwQFeuOcJjhssFOXew8uSaQkIpSc"
+on telegram message:
+ if "%event-telegram bot%" is "NovyBot":
+  if text of event-telegram message is "/commands":
+   send telegram message "Here is a list of commands:%nl%/players | tells you who is online%nl%/broadcast | broadcast the message after your current message" to chat of event-telegram message
+  else if text of event-telegram message contains "/broadcast":
+   set {_m} to event-telegram message
+   set {_m} to "%{_m}%"
+   replace all "/broadcast" with "" in {_m}
+   broadcast "%{_m}%"
